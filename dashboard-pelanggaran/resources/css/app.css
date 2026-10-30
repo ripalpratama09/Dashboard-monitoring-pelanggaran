@@ -1,0 +1,3477 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #f5f7fb;
+    font-family: "Segoe UI", sans-serif;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 260px;
+    height: 100vh;
+
+    background: #1e293b;
+    color: #fff;
+
+    padding: 24px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    box-sizing: border-box;
+
+    z-index: 1200;
+
+    transform: translateX(-100%);
+    opacity: 0;
+
+    transition:
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.35s ease;
+}
+
+.sidebar.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* =========================================================
+   SIDEBAR HEADER
+========================================================= */
+
+.sidebar-header {
+    width: 100%;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 0 0 20px 0;
+    padding: 0;
+}
+
+/* =========================================================
+   SIDEBAR BRAND
+========================================================= */
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 0;
+    height: 55px;
+}
+
+/* =========================================================
+   LOGO SATPOL PP
+========================================================= */
+
+.sidebar-logo {
+    width: 55px;
+    height: 55px;
+
+    object-fit: contain;
+
+    display: block;
+
+    margin: 0;
+    padding: 0;
+
+    flex-shrink: 0;
+}
+
+/* =========================================================
+   TEXT BRAND
+========================================================= */
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    min-width: 0;
+
+    margin: 0;
+    padding: 0;
+
+    line-height: 1.2;
+}
+
+.brand-text h6 {
+    color: #fff;
+
+    margin: 0 0 3px 0;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.brand-text small {
+    display: block;
+
+    color: #cbd5e1;
+
+    font-size: 12px;
+    line-height: 1.25;
+
+    margin: 0;
+}
+
+/* =========================================================
+   TOMBOL CLOSE SIDEBAR
+========================================================= */
+
+#closeSidebar {
+    width: 36px;
+    height: 36px;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    color: #fff;
+}
+
+#closeSidebar:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+#closeSidebar:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* =========================================================
+   GARIS SIDEBAR
+========================================================= */
+
+.sidebar > hr {
+    margin: 0 0 18px 0 !important;
+}
+
+/* =========================================================
+   MENU SIDEBAR
+========================================================= */
+
+.sidebar > .nav {
+    width: 100%;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .nav-item {
+    width: 100%;
+}
+
+.sidebar .nav-link {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    color: #cbd5e1;
+
+    padding: 12px 16px;
+
+    border-radius: 10px;
+
+    margin-bottom: 8px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    transition: 0.25s ease;
+}
+
+.sidebar .nav-link:hover {
+    background: #334155;
+    color: #fff;
+}
+
+.sidebar .nav-link.active {
+    background: #2563eb;
+    color: #fff;
+}
+
+/* =========================================================
+   SIDEBAR OVERLAY
+========================================================= */
+
+.sidebar-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(15, 23, 42, 0.1);
+
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(4px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.35s;
+
+    z-index: 1100;
+}
+
+.sidebar-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.main-content {
+    min-height: 100vh;
+
+    transform-origin: left center;
+
+    transition:
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.35s ease,
+        opacity 0.35s ease;
+}
+
+.main-content.shift {
+    transform: translateX(35px) scale(0.985);
+
+    filter: blur(2px);
+
+    opacity: 0.92;
+}
+
+/* =========================================================
+   NAVBAR & TOP NAVIGATION
+========================================================= */
+
+.top-navbar {
+    background: #ffffff;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px 0 15px;
+    border-bottom: 1px solid #eef2f7;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+}
+
+.nav-brand-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: -0.2px;
+}
+
+/* Container Menu Navigasi Atas */
+.top-nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+    margin-left: auto;
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
+}
+
+/* Sembunyikan menu di awal khusus pada halaman profil sebelum klik 'Selengkapnya' */
+.top-nav-menu.profile-menu-hidden {
+    display: none !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
+}
+
+/* Munculkan menu setelah klik 'Selengkapnya' */
+.top-nav-menu.profile-menu-visible {
+    display: flex !important;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    animation: topNavFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes topNavFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tab Item Navigasi Atas */
+.top-nav-tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    padding: 0 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #64748b;
+    text-decoration: none !important;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.top-nav-tab span {
+    position: relative;
+    z-index: 2;
+}
+
+/* Indikator Garis Bawah (Underline) */
+.top-nav-tab::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 14px;
+    right: 14px;
+    height: 3px;
+    background-color: #2563eb;
+    border-radius: 4px 4px 0 0;
+    transform: scaleX(0);
+    transform-origin: center;
+    opacity: 0;
+    transition:
+        transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.2s ease,
+        background-color 0.2s ease;
+    z-index: 1;
+}
+
+/* Efek Hover Tab */
+.top-nav-tab:hover {
+    color: #1d4ed8;
+    background-color: rgba(37, 99, 235, 0.05);
+    text-decoration: none !important;
+}
+
+.top-nav-tab:hover::after {
+    transform: scaleX(0.7);
+    opacity: 0.5;
+    background-color: #93c5fd;
+}
+
+/* Status Aktif (Active Tab dengan Garis Bawah Jelas) */
+.top-nav-tab.active {
+    color: #1d4ed8 !important;
+    font-weight: 700;
+}
+
+.top-nav-tab.active::after {
+    transform: scaleX(1);
+    opacity: 1;
+    background-color: #2563eb;
+    box-shadow: 0 -1px 5px rgba(37, 99, 235, 0.35);
+}
+
+.top-nav-tab:active {
+    transform: scale(0.98);
+}
+
+/* =========================================================
+   MENU TOGGLE / HAMBURGER
+========================================================= */
+
+.menu-toggle {
+    width: 44px;
+    height: 44px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.25s;
+}
+
+.menu-toggle i {
+    font-size: 28px;
+    color: #334155;
+}
+
+.menu-toggle:hover {
+    background: #eef4ff;
+}
+
+.menu-toggle:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card {
+    border: none;
+
+    border-radius: 15px;
+
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================================
+   DASHBOARD CARD
+========================================================= */
+
+.dashboard-card {
+    transition: 0.25s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.icon-box {
+    width: 58px;
+    height: 58px;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+}
+
+/* =========================================================
+   CHART CARD
+========================================================= */
+
+.chart-card {
+    border: 0;
+
+    border-radius: 16px;
+
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
+
+    transition: 0.25s;
+}
+
+.chart-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+}
+
+.chart-card .card-body {
+    height: 340px;
+
+    position: relative;
+}
+
+.donut-chart-card .card-body {
+    height: 380px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =========================================================
+   RANKING
+========================================================= */
+
+.ranking-item {
+    margin-bottom: 18px;
+}
+
+.ranking-number {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    margin-right: 10px;
+
+    border-radius: 50%;
+
+    background: #e9f2ff;
+    color: #2563eb;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress {
+    height: 8px;
+
+    border-radius: 999px;
+
+    background: #edf2f7;
+}
+
+.progress-bar {
+    border-radius: 999px;
+
+    background: #2563eb;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.btn-close:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* =========================================================
+   HALAMAN PROFIL & HERO
+========================================================= */
+
+.profile-page {
+    width: 100%;
+    background-color: #f8fafc;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-hero {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 64px);
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* =========================================================
+   OVERLAY PROFIL
+========================================================= */
+
+.profile-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(8, 20, 36, 0.3) 0%,
+        rgba(8, 20, 36, 0.46) 100%
+    );
+    z-index: 1;
+}
+
+/* =========================================================
+   KONTEN HERO PROFIL
+========================================================= */
+
+.profile-hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1120px;
+    padding: 60px 24px;
+    color: #fff;
+    margin: 0 auto;
+}
+
+/* =========================================================
+   JUDUL PROFIL
+========================================================= */
+
+.profile-hero-content h1 {
+    margin: 0 0 20px;
+    font-size: clamp(24px, 3.3vw, 42px);
+    line-height: 1.3;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 3px 14px rgba(0, 0, 0, 0.75);
+    letter-spacing: -0.3px;
+}
+
+/* =========================================================
+   DESKRIPSI PROFIL
+========================================================= */
+
+.profile-hero-content p {
+    max-width: 780px;
+    margin: 0 auto 32px;
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 400;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
+}
+
+/* =========================================================
+   TOMBOL SELENGKAPNYA (HERO)
+========================================================= */
+
+.profile-detail-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.profile-detail-button:hover {
+    background: #fff;
+    color: #0b3157;
+    border-color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* =========================================================
+   SECTION KONTEN PROFIL (SCROLL KE BAWAH)
+========================================================= */
+
+.profile-expanded-area {
+    display: none;
+    opacity: 0;
+}
+
+.profile-expanded-area.show {
+    display: block;
+    animation: profileRevealDown 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes profileRevealDown {
+    0% {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-content-section {
+    background-color: #f8fafc;
+    padding: 60px 0 70px 0;
+    width: 100%;
+}
+
+.profile-container {
+    width: 100%;
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 0 36px;
+}
+
+/* =========================================================
+   DUA KARTU PROFIL (KABUPATEN & SATPOL PP)
+========================================================= */
+
+.profile-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    margin-bottom: 60px;
+}
+
+.profile-feature-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 36px 40px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.profile-feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.1);
+    border-color: #cbd5e1;
+}
+
+.profile-card-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.profile-card-icon.icon-blue {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+.profile-card-icon.icon-amber {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.profile-feature-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 12px 0;
+}
+
+.profile-feature-card p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #64748b;
+    margin: 0 0 24px 0;
+    flex-grow: 1;
+}
+
+.profile-card-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e3a8a;
+    text-decoration: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    transition:
+        gap 0.2s ease,
+        color 0.2s ease;
+}
+
+.profile-card-action:hover {
+    color: #2563eb;
+    gap: 12px;
+}
+
+/* =========================================================
+   BERITA & JURNAL TERBARU
+========================================================= */
+
+.news-journal-section {
+    margin-bottom: 20px;
+}
+
+.news-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.news-section-header h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.3px;
+}
+
+.news-section-header p {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+}
+
+.news-header-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    border: 1.5px solid #2563eb;
+    color: #2563eb;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+}
+
+.news-header-btn:hover {
+    background: #2563eb;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.25);
+}
+
+.news-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.news-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.news-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.09);
+    border-color: #cbd5e1;
+}
+
+.news-card-thumb {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: #e2e8f0;
+    position: relative;
+}
+
+.news-card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+}
+
+.news-card:hover .news-card-thumb img {
+    transform: scale(1.06);
+}
+
+.news-card-body {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.news-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.news-badge {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 9px;
+    border-radius: 4px;
+}
+
+.news-badge.badge-gov {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.news-badge.badge-community {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.news-badge.badge-service {
+    background: #e0e7ff;
+    color: #4338ca;
+}
+
+.news-badge.badge-order {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.news-date {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.news-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.4;
+    margin: 0 0 10px 0;
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s ease;
+}
+
+.news-title:hover {
+    color: #2563eb !important;
+    text-decoration: none;
+}
+
+.news-excerpt {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0 0 18px 0;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.news-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e3a8a;
+    text-decoration: none;
+    margin-top: auto;
+    transition:
+        gap 0.2s ease,
+        color 0.2s ease;
+}
+
+.news-read-more:hover {
+    gap: 8px;
+    color: #2563eb !important;
+    text-decoration: none;
+}
+
+/* =========================================================
+   FOOTER PROFIL
+========================================================= */
+
+.profile-footer {
+    background-color: #07172c;
+    color: #f8fafc;
+    padding: 50px 0 30px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.profile-footer-container {
+    width: 100%;
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 0 36px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 56px;
+    align-items: flex-start;
+}
+
+.footer-logos-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-logo-box {
+    background: #ffffff;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    transition: all 0.25s ease;
+}
+
+.footer-logo-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.footer-logo-box.footer-logo-sedata {
+    height: 56px;
+    padding: 6px 14px;
+}
+
+.footer-logo-box.footer-logo-sedata img {
+    height: 100%;
+    width: auto;
+    max-height: 44px;
+    object-fit: contain;
+    display: block;
+}
+
+.footer-logo-satpol-plain {
+    height: 56px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    transition: all 0.25s ease;
+}
+
+.footer-logo-satpol-plain:hover {
+    transform: translateY(-2px) scale(1.04);
+}
+
+.footer-logo-satpol-plain img {
+    height: 100%;
+    width: auto;
+    max-height: 56px;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.45));
+}
+
+.footer-brand-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+}
+
+.footer-brand-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #94a3b8;
+    max-width: 420px;
+    margin: 0;
+}
+
+.footer-col-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #cbd5e1;
+    margin-bottom: 16px;
+}
+
+.footer-contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.5;
+}
+
+.footer-contact-item i {
+    font-size: 15px;
+    color: #38bdf8;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.footer-contact-item a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-contact-item a:hover {
+    color: #38bdf8;
+}
+
+.footer-bottom-bar {
+    width: 100%;
+    max-width: 1560px;
+    margin: 35px auto 0 auto;
+    padding: 20px 36px 0 36px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* =========================================================
+   MODAL PROFIL & BERITA DETAIL
+========================================================= */
+
+.modal-news-img-wrap {
+    width: 100%;
+    max-height: 360px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background: #e2e8f0;
+}
+
+.modal-news-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.modal-news-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.modal-news-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.35;
+    margin-bottom: 8px;
+}
+
+.modal-news-author {
+    font-size: 12.5px;
+    color: #64748b;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-news-body {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #334155;
+}
+
+.modal-news-body p {
+    margin-bottom: 14px;
+}
+
+/* =========================================================
+   RESPONSIVE PROFIL
+========================================================= */
+
+@media (max-width: 1399px) {
+    .news-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 991px) {
+    .profile-feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-container,
+    .profile-footer-container {
+        padding: 0 20px;
+    }
+
+    .profile-footer-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+}
+
+@media (max-width: 640px) {
+    .news-cards-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   HALAMAN KHUSUS: PROFIL KABUPATEN
+========================================================= */
+
+.profile-kabupaten-page {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f8fafc;
+}
+
+.kab-hero-section {
+    position: relative;
+    width: 100%;
+    height: 570px;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 50px 24px;
+    margin: 0;
+}
+
+.kab-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(8, 20, 36, 0.35) 0%,
+        rgba(8, 20, 36, 0.58) 100%
+    );
+    z-index: 1;
+}
+
+.kab-hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 960px;
+    padding: 15px 20px;
+    color: #fff;
+    margin: 0 auto;
+}
+
+.kab-hero-logo {
+    display: block;
+    width: auto;
+    height: clamp(100px, 12vw, 150px);
+    max-width: 170px;
+    object-fit: contain;
+    margin: 0 auto 8px;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+}
+
+.satpol-hero-logo {
+    height: clamp(140px, 16vw, 200px);
+    max-width: 220px;
+}
+
+.kab-hero-content h1 {
+    margin: 0 0 16px;
+    font-size: clamp(28px, 3.4vw, 42px);
+    line-height: 1.25;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 3px 14px rgba(0, 0, 0, 0.75);
+    letter-spacing: -0.3px;
+}
+
+.kab-hero-content p {
+    max-width: 760px;
+    margin: 0 auto;
+    font-size: clamp(15px, 1.15vw, 17px);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 400;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
+}
+
+.kab-content-wrapper {
+    padding: 60px 0 70px 0;
+    background-color: #f8fafc;
+}
+
+.kab-section {
+    margin-bottom: 64px;
+}
+
+.kab-section-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 6px 0;
+    letter-spacing: -0.2px;
+}
+
+.kab-title-line {
+    width: 44px;
+    height: 3.5px;
+    background: #eab308;
+    border-radius: 2px;
+    margin-bottom: 22px;
+}
+
+.kab-about-text p {
+    font-size: 14.5px;
+    line-height: 1.8;
+    color: #475569;
+    margin-bottom: 16px;
+    text-align: justify;
+}
+
+.kab-about-image-card {
+    width: 100%;
+    height: 270px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+}
+
+.satpol-history-image {
+    height: 320px;
+}
+
+.kab-about-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.kab-about-image-card:hover .kab-about-img {
+    transform: scale(1.04);
+}
+
+.kab-about-image-card.kab-about-image-tall {
+    height: 480px;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.03);
+}
+
+@media (min-width: 1400px) {
+    .kab-about-image-card.kab-about-image-tall {
+        height: 520px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .kab-about-image-card.kab-about-image-tall {
+        height: 430px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .kab-about-image-card.kab-about-image-tall {
+        height: 320px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .kab-about-image-card.kab-about-image-tall {
+        height: 240px;
+    }
+
+    .satpol-history-image {
+        height: 260px;
+    }
+}
+
+/* VISI & MISI GRID */
+.kab-visi-misi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 30px;
+}
+
+.kab-card-visi {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 38px 32px;
+    text-align: center;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+}
+
+.kab-card-visi:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+    border-color: #cbd5e1;
+}
+
+.kab-visi-icon-wrap {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #fef9c3;
+    color: #ca8a04;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 14px;
+}
+
+.kab-card-heading {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 14px;
+}
+
+.kab-visi-quote {
+    font-size: 14.5px;
+    line-height: 1.7;
+    font-style: italic;
+    color: #475569;
+    max-width: 320px;
+}
+
+.kab-card-misi {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 38px 36px;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+    transition: all 0.25s ease;
+}
+
+.kab-card-misi:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+    border-color: #cbd5e1;
+}
+
+.kab-misi-icon-wrap {
+    font-size: 22px;
+    color: #d97706;
+    display: flex;
+    align-items: center;
+}
+
+.kab-misi-list {
+    padding-left: 20px;
+    margin: 0;
+    color: #475569;
+    font-size: 14.5px;
+    line-height: 1.85;
+}
+
+.kab-misi-list li {
+    margin-bottom: 10px;
+}
+
+/* JURNAL & BERITA KABUPATEN */
+.kab-news-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.kab-see-all-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e3a8a;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition:
+        gap 0.2s ease,
+        color 0.2s ease;
+}
+
+.kab-see-all-btn:hover {
+    color: #2563eb;
+    gap: 10px;
+}
+
+.kab-news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.kab-news-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 26px 26px;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.kab-news-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    border-color: #cbd5e1;
+}
+
+.kab-news-badge {
+    display: inline-block;
+    width: fit-content;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    background: #fef3c7;
+    color: #b45309;
+    margin-bottom: 14px;
+}
+
+.kab-news-card-title {
+    font-size: 16.5px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.45;
+    margin: 0 0 10px 0;
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s ease;
+}
+
+.kab-news-card-title:hover {
+    color: #2563eb !important;
+    text-decoration: none;
+}
+
+.kab-news-card-desc {
+    font-size: 13.5px;
+    color: #64748b;
+    line-height: 1.65;
+    margin: 0 0 18px 0;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.kab-news-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 12px;
+    margin-top: auto;
+}
+
+.kab-news-card-date {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.kab-news-card-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e3a8a;
+    text-decoration: none;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+    display: inline-block;
+}
+
+.kab-news-card-link:hover {
+    color: #2563eb !important;
+    transform: translateX(3px);
+    text-decoration: none;
+}
+
+/* =========================================================
+   HALAMAN KHUSUS: DETAIL BERITA & JURNAL
+========================================================= */
+
+.berita-detail-page {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+.berita-header-section {
+    background-color: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 44px 0 32px 0;
+    text-align: center;
+}
+
+.berita-header-container {
+    width: 100%;
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 0 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.berita-meta-top {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.berita-meta-item {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.berita-main-title {
+    font-size: clamp(28px, 3.4vw, 42px);
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.3;
+    margin: 0 auto;
+    max-width: 1100px;
+    text-align: center;
+    letter-spacing: -0.3px;
+}
+
+.berita-content-wrapper {
+    padding: 38px 0 70px 0;
+    flex-grow: 1;
+    background-color: #ffffff;
+}
+
+.berita-container {
+    width: 100%;
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 0 36px;
+}
+
+.berita-article-body {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+}
+
+.berita-featured-image-box {
+    width: 100%;
+    height: 480px;
+    max-height: 540px;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    background: #e2e8f0;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+}
+
+.berita-featured-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.berita-article-text {
+    font-size: 16px;
+    line-height: 1.9;
+    color: #334155;
+}
+
+.berita-article-text p {
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.berita-article-text .lead {
+    font-size: 18px;
+    font-weight: 500;
+    color: #1e293b;
+    line-height: 1.75;
+    margin-bottom: 24px;
+}
+
+.news-quote-box {
+    background: #f8fafc;
+    border-left: 4px solid #2563eb;
+    padding: 18px 24px;
+    border-radius: 0 10px 10px 0;
+    margin: 26px 0;
+    font-style: italic;
+    color: #1e293b;
+    font-weight: 500;
+    font-size: 15.5px;
+}
+
+.news-quote-box.quote-warning {
+    border-left-color: #eab308;
+}
+
+.news-quote-box.quote-danger {
+    border-left-color: #ef4444;
+}
+
+.berita-article-footer {
+    display: flex;
+    align-items: center;
+    padding-top: 24px;
+    margin-top: 28px;
+    border-top: 1px solid #e2e8f0;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+/* Sidebar Berita Terbaru tetap di atas (tidak ikut turun saat scroll) */
+.berita-sidebar {
+    position: static;
+    top: auto;
+}
+
+.berita-sidebar-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 26px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+}
+
+.berita-sidebar-heading {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 18px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.berita-sidebar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.berita-sidebar-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f1f5f9;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.berita-sidebar-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.berita-sidebar-item:hover {
+    transform: translateX(4px);
+}
+
+.berita-sidebar-thumb {
+    width: 78px;
+    height: 78px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #e2e8f0;
+}
+
+.berita-sidebar-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.berita-sidebar-item:hover .berita-sidebar-thumb img {
+    transform: scale(1.08);
+}
+
+.berita-sidebar-info {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.berita-sidebar-item-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.4;
+    margin: 0;
+    transition: color 0.2s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.berita-sidebar-item:hover .berita-sidebar-item-title {
+    color: #2563eb !important;
+}
+
+@media (max-width: 991px) {
+    .berita-header-container,
+    .berita-container {
+        padding: 0 20px;
+    }
+
+    .berita-featured-image-box {
+        height: 280px;
+    }
+
+    .berita-article-card {
+        padding: 24px 20px;
+    }
+
+    .berita-sidebar {
+        position: static;
+        margin-top: 16px;
+    }
+}
+
+@media (max-width: 991px) {
+    .kab-visi-misi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kab-news-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .kab-news-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   PROFIL SATPOL PP
+========================================================= */
+
+.satpol-tupoksi-intro {
+    max-width: 760px;
+    margin: -10px auto 36px;
+    color: #475569;
+    font-size: 15px;
+    line-height: 1.75;
+}
+
+.satpol-fungsi-box {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+    transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.satpol-fungsi-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3.5px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.satpol-fungsi-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 32px -4px rgba(15, 23, 42, 0.09), 0 4px 8px -2px rgba(15, 23, 42, 0.03);
+}
+
+.satpol-fungsi-box:hover::before {
+    opacity: 1;
+}
+
+/* Modifiers border & accent hover */
+.satpol-fungsi-box.satpol-box-amber:hover {
+    border-color: #f59e0b;
+}
+.satpol-fungsi-box.satpol-box-amber::before {
+    background: #f59e0b;
+}
+
+.satpol-fungsi-box.satpol-box-blue:hover {
+    border-color: #0284c7;
+}
+.satpol-fungsi-box.satpol-box-blue::before {
+    background: #0284c7;
+}
+
+.satpol-fungsi-box.satpol-box-indigo:hover {
+    border-color: #6366f1;
+}
+.satpol-fungsi-box.satpol-box-indigo::before {
+    background: #6366f1;
+}
+
+.satpol-fungsi-box.satpol-box-green:hover {
+    border-color: #10b981;
+}
+.satpol-fungsi-box.satpol-box-green::before {
+    background: #10b981;
+}
+
+.satpol-fungsi-box.satpol-box-cyan:hover {
+    border-color: #0ea5e9;
+}
+.satpol-fungsi-box.satpol-box-cyan::before {
+    background: #0ea5e9;
+}
+
+.satpol-fungsi-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.satpol-fungsi-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    transition: transform 0.25s ease;
+}
+
+.satpol-fungsi-box:hover .satpol-fungsi-icon {
+    transform: scale(1.08);
+}
+
+.satpol-fungsi-icon.icon-amber {
+    background: #fef3c7;
+    color: #d97706;
+    border: 1px solid #fde68a;
+}
+
+.satpol-fungsi-icon.icon-blue {
+    background: #e0f2fe;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+}
+
+.satpol-fungsi-icon.icon-indigo {
+    background: #e0e7ff;
+    color: #4f46e5;
+    border: 1px solid #c7d2fe;
+}
+
+.satpol-fungsi-icon.icon-green {
+    background: #d1fae5;
+    color: #059669;
+    border: 1px solid #a7f3d0;
+}
+
+.satpol-fungsi-icon.icon-cyan {
+    background: #e0f2fe;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+}
+
+.satpol-fungsi-pill {
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 4px 11px;
+    border-radius: 20px;
+}
+
+.satpol-fungsi-pill.pill-amber {
+    background: #fffbeb;
+    color: #b45309;
+    border: 1px solid #fef3c7;
+}
+
+.satpol-fungsi-pill.pill-blue {
+    background: #f0f9ff;
+    color: #0369a1;
+    border: 1px solid #e0f2fe;
+}
+
+.satpol-fungsi-pill.pill-indigo {
+    background: #eef2ff;
+    color: #4338ca;
+    border: 1px solid #e0e7ff;
+}
+
+.satpol-fungsi-pill.pill-green {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #d1fae5;
+}
+
+.satpol-fungsi-pill.pill-cyan {
+    background: #f0f9ff;
+    color: #0284c7;
+    border: 1px solid #e0f2fe;
+}
+
+.satpol-fungsi-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.satpol-fungsi-desc {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #334155;
+    margin: 0;
+    text-align: justify;
+}
+
+.satpol-point-tag {
+    font-weight: 800;
+    color: #0f172a;
+    font-size: 14.5px;
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.satpol-section-intro {
+    max-width: 700px;
+    margin: 0 auto 28px;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* =========================================================
+   BAGAN STRUKTUR ORGANISASI SATPOL PP
+========================================================= */
+
+.satpol-structure-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.satpol-structure-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.satpol-structure-card:hover {
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.09);
+    border-color: #cbd5e1;
+}
+
+.satpol-structure-link {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    text-decoration: none;
+    cursor: zoom-in;
+}
+
+.satpol-structure-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    border-radius: 12px;
+    transition: transform 0.35s ease;
+}
+
+.satpol-structure-link:hover .satpol-structure-img {
+    transform: scale(1.012);
+}
+
+.satpol-structure-overlay {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(15, 23, 42, 0.78);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 30px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.25s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.satpol-structure-link:hover .satpol-structure-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 991.98px) {
+    .satpol-structure-card {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .satpol-structure-overlay {
+        opacity: 0.95;
+        transform: translateY(0);
+        bottom: 12px;
+        right: 12px;
+        font-size: 11.5px;
+        padding: 6px 12px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .satpol-structure-card {
+        padding: 10px;
+        border-radius: 12px;
+    }
+}
+
+.satpol-org-leader {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 20px 24px;
+    color: #fff;
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    border-radius: 14px;
+    box-shadow: 0 10px 24px rgba(30, 58, 138, 0.16);
+}
+
+.satpol-org-leader > i {
+    font-size: 30px;
+}
+
+.satpol-org-leader strong,
+.satpol-org-leader span {
+    display: block;
+}
+
+.satpol-org-leader strong {
+    margin-bottom: 4px;
+    font-size: 16px;
+}
+
+.satpol-org-leader span {
+    color: rgba(255, 255, 255, 0.86);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.satpol-org-connector {
+    width: 2px;
+    height: 28px;
+    margin: 0 auto;
+    background: #cbd5e1;
+}
+
+.satpol-org-grid,
+.satpol-functions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.satpol-org-card,
+.satpol-function-card {
+    min-height: 190px;
+    padding: 22px 20px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.satpol-org-card > i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 14px;
+    color: #b45309;
+    background: #fef3c7;
+    border-radius: 12px;
+    font-size: 19px;
+}
+
+.satpol-org-card h3,
+.satpol-function-card h3 {
+    margin: 0 0 9px;
+    color: #0f172a;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.satpol-org-card p,
+.satpol-function-card p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.satpol-structure-note {
+    max-width: 1040px;
+    margin: 14px auto 0;
+    color: #94a3b8;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.satpol-function-card {
+    min-height: 205px;
+}
+
+.satpol-function-card > span {
+    display: inline-block;
+    margin-bottom: 16px;
+    color: #d97706;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+@media (max-width: 991px) {
+    .satpol-org-grid,
+    .satpol-functions-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 575px) {
+    .satpol-org-grid,
+    .satpol-functions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .satpol-org-card,
+    .satpol-function-card {
+        min-height: 0;
+    }
+}
+
+/* =========================================================
+   PETA
+========================================================= */
+
+#map {
+    width: 100%;
+
+    height: 700px;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+}
+
+/* =========================================================
+   LEGENDA PETA
+========================================================= */
+
+.map-legend {
+    background: #fff;
+
+    padding: 12px 15px;
+
+    border-radius: 8px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+
+    font-size: 13px;
+}
+
+.legend-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 7px;
+}
+
+.legend-box {
+    width: 18px;
+    height: 12px;
+
+    display: inline-block;
+
+    border-radius: 2px;
+}
+
+.legend-box.kecamatan {
+    background: rgba(96, 165, 250, 0.35);
+
+    border: 2px solid #2563eb;
+}
+
+.legend-box.desa {
+    background: rgba(74, 222, 128, 0.3);
+
+    border: 1px solid #16a34a;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+    /* Navbar */
+
+    .top-navbar {
+        padding: 0 12px;
+        height: auto;
+        min-height: 58px;
+    }
+
+    .nav-brand-title,
+    .top-navbar h4 {
+        font-size: 14px !important;
+    }
+
+    .top-nav-menu {
+        gap: 2px;
+    }
+
+    .top-nav-tab {
+        height: 58px;
+        padding: 0 10px;
+        font-size: 12.5px;
+    }
+
+    .top-nav-tab::after {
+        left: 8px;
+        right: 8px;
+        height: 2.5px;
+    }
+
+    /* Sidebar */
+
+    .sidebar {
+        width: 230px;
+    }
+
+    /* Profil */
+
+    .profile-hero {
+        min-height: calc(100vh - 64px);
+    }
+
+    .kab-hero-section {
+        height: auto;
+        min-height: 420px;
+        padding: 40px 20px;
+    }
+
+    .profile-hero-content {
+        padding: 30px 20px;
+    }
+
+    .kab-hero-content {
+        padding: 10px 15px;
+    }
+
+    .profile-hero-content h1,
+    .kab-hero-content h1 {
+        font-size: 28px;
+    }
+
+    .profile-hero-content p,
+    .kab-hero-content p {
+        font-size: 14px;
+    }
+
+    /* Peta */
+
+    #map {
+        height: 500px;
+    }
+}
+
+/* =========================================================
+   FIX SIDEBAR HEADER DAN LOGO
+========================================================= */
+
+.sidebar {
+    top: 0 !important;
+    bottom: 0 !important;
+
+    height: 100vh !important;
+
+    padding: 24px !important;
+
+    display: block !important;
+
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* Header harus selalu berada di bagian paling atas */
+
+.sidebar .sidebar-header {
+    position: relative !important;
+
+    width: 100% !important;
+    height: 55px !important;
+
+    margin: 0 0 20px 0 !important;
+    padding: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+/* Brand */
+
+.sidebar .sidebar-brand {
+    position: relative !important;
+
+    display: flex !important;
+    align-items: center !important;
+
+    width: auto !important;
+    height: 55px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    gap: 12px !important;
+}
+
+/* Logo */
+
+.sidebar .sidebar-logo {
+    position: relative !important;
+
+    width: 55px !important;
+    height: 55px !important;
+
+    min-width: 55px !important;
+    max-width: 55px !important;
+
+    min-height: 55px !important;
+    max-height: 55px !important;
+
+    display: block !important;
+
+    object-fit: contain !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    flex-shrink: 0 !important;
+
+    /* BESARKAN LOGO TANPA MENGGESER TULISAN & MENU */
+    transform: scale(1.5);
+}
+
+/* Text */
+
+.sidebar .brand-text {
+    position: relative !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+
+    width: auto !important;
+    height: 55px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    line-height: 1.2 !important;
+}
+
+.sidebar .brand-text h6 {
+    display: block !important;
+
+    margin: 0 0 3px 0 !important;
+
+    color: #ffffff !important;
+
+    font-size: 18px !important;
+    font-weight: 700 !important;
+}
+
+.sidebar .brand-text small {
+    display: block !important;
+
+    margin: 0 !important;
+
+    color: #cbd5e1 !important;
+
+    font-size: 12px !important;
+
+    line-height: 1.25 !important;
+}
+
+/* Tombol X */
+
+.sidebar #closeSidebar {
+    position: relative !important;
+
+    width: 36px !important;
+    height: 36px !important;
+
+    min-width: 36px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    flex-shrink: 0 !important;
+
+    color: #ffffff !important;
+}
+
+/* Garis */
+
+.sidebar > hr {
+    display: block !important;
+
+    width: 100% !important;
+
+    margin: 0 0 18px 0 !important;
+}
+
+/* Menu */
+
+.sidebar > ul.nav {
+    display: flex !important;
+    flex-direction: column !important;
+
+    width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.sidebar > ul.nav .nav-item {
+    display: block !important;
+
+    width: 100% !important;
+
+    margin: 0 !important;
+}
+
+.sidebar > ul.nav .nav-link {
+    display: flex !important;
+    align-items: center !important;
+
+    width: 100% !important;
+
+    margin: 0 0 8px 0 !important;
+    padding: 12px 16px !important;
+}
+
+/* Jangan ada margin atas aneh pada menu pertama */
+
+.sidebar > ul.nav .nav-item:first-child {
+    margin-top: 0 !important;
+}
+
+/* =========================================================
+   PAKSA SIDEBAR KEMBALI KE POSISI PALING ATAS
+========================================================= */
+
+.sidebar {
+    scroll-behavior: auto !important;
+}
+
+.sidebar.show {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+}
+
+/* =========================================================
+   TOOLTIP & LEGENDA PETA
+========================================================= */
+.leaflet-tooltip.map-hover-tooltip {
+    background: #ffffff;
+    color: #1e293b;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.18), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+    white-space: normal;
+    min-width: 210px;
+    max-width: 320px;
+    pointer-events: none;
+    line-height: 1.5;
+    animation: map-tooltip-appear 150ms ease-out;
+}
+
+@keyframes map-tooltip-appear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.98;
+    }
+}
+
+.leaflet-tooltip-top.map-hover-tooltip::before {
+    border-top-color: #ffffff;
+}
+
+.leaflet-tooltip-bottom.map-hover-tooltip::before {
+    border-bottom-color: #ffffff;
+}
+
+.leaflet-tooltip-left.map-hover-tooltip::before {
+    border-left-color: #ffffff;
+}
+
+.leaflet-tooltip-right.map-hover-tooltip::before {
+    border-right-color: #ffffff;
+}
+
+.map-tooltip-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.map-tooltip-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: #0f172a;
+    margin-bottom: 4px;
+}
+
+.map-tooltip-total {
+    font-size: 12.5px;
+    color: #475569;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 6px;
+}
+
+.map-tooltip-total strong {
+    color: #1e3a8a;
+    font-size: 13.5px;
+    font-weight: 700;
+}
+
+.map-tooltip-jenis-list {
+    margin-top: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.map-tooltip-jenis-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    font-size: 12px;
+    color: #334155;
+}
+
+.map-tooltip-jenis-item strong {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.map-legend {
+    background: white;
+    padding: 12px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    font-size: 13px;
+}
+
+.map-legend strong {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.legend-box {
+    width: 22px;
+    height: 13px;
+    display: inline-block;
+    border-radius: 2px;
+}
+
+/* ============================================================
+   STATISTIK PAGE - MODERN UI
+   ============================================================ */
+
+/* ============================================================
+   CARD
+   ============================================================ */
+
+.statistik-chart-card {
+    height: 100%;
+
+    overflow: hidden;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.statistik-chart-card:hover {
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+}
+
+/* ============================================================
+   ICON
+   ============================================================ */
+
+.stat-chart-icon {
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 17px;
+}
+
+/* ============================================================
+   CHART CONTAINER
+   ============================================================ */
+
+.stat-chart-container {
+    position: relative;
+
+    width: 100%;
+
+    max-width: 100%;
+}
+
+.stat-wilayah-container {
+    height: 360px;
+}
+
+.stat-doughnut-container {
+    height: 390px;
+}
+
+.stat-trend-container {
+    height: 330px;
+}
+
+/* ============================================================
+   CANVAS
+   ============================================================ */
+
+.statistik-chart-card canvas {
+    max-width: 100% !important;
+}
+
+/* ============================================================
+   RANKING
+   ============================================================ */
+
+.ranking-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 13px 0;
+
+    border-bottom: 1px solid #f1f5f9;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.ranking-item:last-child {
+    border-bottom: none;
+}
+
+.ranking-item:hover {
+    transform: translateX(4px);
+}
+
+/* ============================================================
+   RANKING NUMBER
+   ============================================================ */
+
+.ranking-number {
+    min-width: 36px;
+
+    width: 36px;
+
+    height: 36px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: 700;
+
+    font-size: 13px;
+
+    background: #f1f5f9;
+
+    color: #64748b;
+}
+
+/* JUARA 1 */
+
+.ranking-first {
+    background: #fef3c7;
+
+    color: #d97706;
+}
+
+/* JUARA 2 */
+
+.ranking-second {
+    background: #e2e8f0;
+
+    color: #475569;
+}
+
+/* JUARA 3 */
+
+.ranking-third {
+    background: #ffedd5;
+
+    color: #c2410c;
+}
+
+/* ============================================================
+   RANKING CONTENT
+   ============================================================ */
+
+.ranking-content {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.ranking-name {
+    font-weight: 600;
+
+    color: #1e293b;
+}
+
+.ranking-value {
+    color: #2563eb;
+
+    font-size: 15px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 991px) {
+    .stat-wilayah-container {
+        height: 400px;
+    }
+
+    .stat-doughnut-container {
+        height: 360px;
+    }
+}
+
+@media (max-width: 576px) {
+    .stat-wilayah-container {
+        height: 420px;
+    }
+
+    .stat-doughnut-container {
+        height: 340px;
+    }
+
+    .stat-trend-container {
+        height: 280px;
+    }
+
+    .ranking-item {
+        padding: 10px 0;
+    }
+}
+
+/* =========================================================
+   STATISTIK - MODERN DASHBOARD
+========================================================= */
+
+.statistik-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    overflow: hidden;
+}
+
+.statistik-card .card-header {
+    background: #ffffff;
+    border-bottom: 0;
+    padding: 18px 20px 8px;
+}
+
+.statistik-card .card-header h5 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 4px;
+}
+
+.statistik-card .card-header small {
+    color: #64748b;
+    font-size: 11px;
+}
+
+.statistik-card .card-body {
+    padding: 10px 18px 18px;
+    overflow: hidden;
+}
+
+/* =========================================================
+   AREA GRAFIK
+========================================================= */
+
+.statistik-chart-wrapper {
+    position: relative;
+    width: 100%;
+    height: 330px;
+    overflow: hidden;
+}
+
+.statistik-chart-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Grafik perbandingan wilayah dibuat sedikit lebih tinggi */
+
+.statistik-chart-wrapper.wilayah {
+    height: 380px;
+}
+
+/* Grafik trend */
+
+.statistik-chart-wrapper.trend {
+    height: 320px;
+}
+
+/* Grafik jenis */
+
+.statistik-chart-wrapper.jenis {
+    height: 320px;
+}
+
+/* =========================================================
+   GRID STATISTIK
+========================================================= */
+
+.statistik-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+/* =========================================================
+   CARD RANKING
+========================================================= */
+
+.statistik-ranking {
+    height: 100%;
+}
+
+.statistik-ranking-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.statistik-ranking-item:last-child {
+    border-bottom: none;
+}
+
+.statistik-ranking-number {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eff6ff;
+    color: #2563eb;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    flex-shrink: 0;
+}
+
+.statistik-ranking-name {
+    flex: 1;
+    font-size: 12px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.statistik-ranking-value {
+    font-size: 12px;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+.statistik-filter {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.statistik-filter .form-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #334155;
+}
+
+.statistik-filter .form-select {
+    min-height: 40px;
+    border-radius: 8px;
+    border-color: #dbe2ea;
+    font-size: 12px;
+}
+
+.statistik-filter .form-select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 992px) {
+    .statistik-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .statistik-chart-wrapper {
+        height: 320px;
+    }
+
+    .statistik-chart-wrapper.wilayah {
+        height: 400px;
+    }
+}
+
+@media (max-width: 576px) {
+    .statistik-chart-wrapper {
+        height: 280px;
+    }
+
+    .statistik-chart-wrapper.wilayah {
+        height: 450px;
+    }
+
+    .statistik-card .card-header {
+        padding: 15px 15px 5px;
+    }
+
+    .statistik-card .card-body {
+        padding: 8px 12px 15px;
+    }
+}
+
+/* =========================================================
+   CUSTOM DROPDOWN FILTER STATISTIK
+========================================================= */
+
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.custom-dropdown-toggle {
+    width: 100%;
+    height: 38px;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 500;
+    color: #212529;
+    cursor: pointer;
+    text-align: left;
+    transition:
+        border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out,
+        background-color 0.15s ease-in-out;
+}
+
+.custom-dropdown-toggle:hover:not(:disabled) {
+    border-color: #cbd5e1;
+    background-color: #f8fafc;
+}
+
+.custom-dropdown-toggle:focus,
+.custom-dropdown.show .custom-dropdown-toggle {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+    background-color: #ffffff;
+    outline: 0;
+}
+
+.custom-dropdown-toggle:disabled {
+    background-color: #f8fafc;
+    color: #94a3b8;
+    cursor: not-allowed;
+    border-color: #e2e8f0;
+}
+
+.custom-dropdown-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 8px;
+}
+
+.custom-dropdown-icon {
+    font-size: 12px;
+    color: #64748b;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.custom-dropdown.show .custom-dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.custom-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    min-width: 100%;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    box-shadow:
+        0 10px 25px -5px rgba(15, 23, 42, 0.1),
+        0 8px 10px -6px rgba(15, 23, 42, 0.04);
+    padding: 6px;
+    margin: 0;
+    list-style: none;
+    z-index: 1050;
+    max-height: 260px;
+    overflow-y: auto;
+    display: none;
+}
+
+.custom-dropdown.show .custom-dropdown-menu {
+    display: block;
+}
+
+.custom-dropdown-item {
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #334155;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+}
+
+.custom-dropdown-item:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.custom-dropdown-item.active {
+    background: #eff6ff;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+/* =========================================================
+   CUSTOM SPLIT BUTTON STATISTIK (BUTTON DENGAN DROPDOWN)
+========================================================= */
+
+.btn-split-statistik {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 0;
+    transition:
+        border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out;
+    height: 38px;
+    width: 100%;
+}
+
+.btn-split-statistik:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+}
+
+.btn-split-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 10px;
+    background: transparent;
+    border: none;
+    color: #212529;
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+    border-top-left-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+    white-space: nowrap;
+}
+
+.btn-split-main:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.btn-split-main i {
+    font-size: 15px;
+    color: #475569;
+}
+
+.btn-split-divider {
+    width: 1px;
+    background: #dee2e6;
+    margin: 6px 0;
+    flex-shrink: 0;
+}
+
+.btn-split-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: #475569;
+    font-size: 13px;
+    cursor: pointer;
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+    transition: background 0.15s ease;
+    flex-shrink: 0;
+}
+
+.btn-split-toggle:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.btn-split-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: #ffffff;
+    border-radius: 0.375rem;
+    border: 1px solid #dee2e6;
+    box-shadow:
+        0 10px 25px -5px rgba(15, 23, 42, 0.1),
+        0 8px 10px -6px rgba(15, 23, 42, 0.04);
+    padding: 6px;
+    min-width: 130px;
+    z-index: 1050;
+    display: none;
+    margin: 0;
+    list-style: none;
+}
+
+.btn-split-dropdown.show {
+    display: block !important;
+}
+
+.btn-split-dropdown .dropdown-item {
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #334155;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+.btn-split-dropdown .dropdown-item:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.btn-split-dropdown .dropdown-item i {
+    font-size: 15px;
+    color: #475569;
+}
